@@ -9,7 +9,7 @@ from docx2pdf import convert
 import os
 import comtypes.client
 import time
-
+import PyPDF2
 
 def img_to_pdf():
     source_file_path = Image.open(askopenfilename())
@@ -45,3 +45,12 @@ def doc_to_pdf():
     doc.SaveAs(out_file2, FileFormat=wdFormatPDF)
     doc.Close()
     word.Quit()
+
+
+def pdf_to_doc():
+    source_file_path = askopenfilename()
+    with open(source_file_path, mode='rb') as f:
+        reader = PyPDF2.PdfFileReader(f)
+        page = reader.getPage(0)
+        print(page.extractText())
+pdf_to_doc()
